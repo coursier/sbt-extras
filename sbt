@@ -26,7 +26,7 @@ declare -r sbt_launch_mvn_snapshot_repo="https://repo.scala-sbt.org/scalasbt/mav
 declare -r default_jvm_opts_common="-Xms512m -Xss2m -XX:MaxInlineLevel=18"
 declare -r noshare_opts="-Dsbt.global.base=project/.sbtboot -Dsbt.boot.directory=project/.boot -Dsbt.ivy.home=project/.ivy"
 
-declare -r default_coursier_launcher_version="1.2.19"
+declare -r default_coursier_launcher_version="1.2.20"
 declare coursier_launcher_version="default"
 
 declare sbt_jar sbt_dir sbt_create sbt_version sbt_script sbt_new
