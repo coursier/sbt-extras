@@ -66,7 +66,7 @@ declare sbt_launch_dir="$HOME/.sbt/launchers"
 declare sbt_launch_repo
 
 # pull -J and -D options to give to java.
-declare -a java_args coursier_args scalac_args sbt_commands residual_args
+declare -a java_args scalac_args sbt_commands residual_args
 
 # args to jvm/sbt via files or environment variables
 declare -a extra_jvm_opts extra_sbt_opts
@@ -189,10 +189,6 @@ enable_coursier () {
 addJava()      {
   vlog "[addJava] arg = '$1'"
   java_args+=("$1")
-}
-addCoursier () {
-  vlog "[addCoursier] arg = '$1'"
-  coursier_args+=("$1")
 }
 addSbt()       {
   vlog "[addSbt] arg = '$1'"
@@ -556,7 +552,6 @@ process_args() {
       -D*)          addJava "$1" && shift ;;
       -J*)          addJava "${1:2}" && shift ;;
       -S*)          addScalac "${1:2}" && shift ;;
-      -C*)          addCoursier "${1:2}" && shift ;;
 
       new)          sbt_new=true && : ${sbt_explicit_version:=$sbt_release_version} && addResidual "$1" && shift ;;
 
@@ -697,15 +692,13 @@ fi
 
 # options before a -- may be interpreted as options for itself by the
 # coursier-based launcher
-[[ -z "$coursier_launcher_version" ]] || [[ ${#coursier_args[@]} -eq 0 ]] || {
+[[ -z "$coursier_launcher_version" ]] || {
   addJava "-Dcoursier.sbt-launcher.parse-args=true"
-  addCoursier "--"
 }
 
 execRunner "$java_cmd" \
   "${extra_jvm_opts[@]}" \
   "${java_args[@]}" \
   -jar "$sbt_jar" \
-  "${coursier_args[@]}" \
   "${sbt_commands[@]}" \
   "${residual_args[@]}"
