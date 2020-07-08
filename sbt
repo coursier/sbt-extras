@@ -190,6 +190,10 @@ addJava()      {
   vlog "[addJava] arg = '$1'"
   java_args+=("$1")
 }
+addCoursier () {
+  vlog "[addCoursier] arg = '$1'"
+  coursier_args+=("$1")
+}
 addSbt()       {
   vlog "[addSbt] arg = '$1'"
   sbt_commands+=("$1")
